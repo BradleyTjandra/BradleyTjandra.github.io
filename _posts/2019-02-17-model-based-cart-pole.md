@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [Code] Model-Based Q-Learner on OpenAI's Cart Pole
+title: \[CODE\] Model-Based Q-Learner on OpenAI's Cart Pole
 date: 2019-02-17 05:00:00 +1000
 ---
 
