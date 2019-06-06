@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Implementation to solve OpenAI's Gym's Frozen Lake Environment
+title: Q-Learner on OpenAI's Frozen Lake
 date: 2019-02-17 05:00:00 +1000
 ---
 
