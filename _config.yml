@@ -4,7 +4,7 @@ permalink:           pretty
 # Setup
 title:               Bradley Tjandra
 tagline:             Sydney, Australia
-url:                 http://getpoole.com
+url:                 https://bradleytjandra.github.io/
 paginate:            1
 baseurl:             ''
 markdown:            kramdown
