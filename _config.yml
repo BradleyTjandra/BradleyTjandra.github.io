@@ -3,7 +3,7 @@ permalink:           pretty
 
 # Setup
 title:               Bradley Tjandra
-tagline:             Sydney
+tagline:             Sydney, Australia
 url:                 http://getpoole.com
 paginate:            1
 baseurl:             ''
@@ -18,9 +18,9 @@ sass:
 
 # About/contact
 author:
-  name:              Mark Otto
-  url:               https://twitter.com/mdo
-  email:             markdotto@gmail.com
+  name:              Bradley Tjandra 
+  url:               https://twitter.com/BradleyTjandra
+  email:             bjtjandra@gmail.com
 
 # Custom vars
 version:             2.0.0
