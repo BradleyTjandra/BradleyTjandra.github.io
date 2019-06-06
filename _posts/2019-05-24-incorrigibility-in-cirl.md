@@ -4,8 +4,6 @@ title: Incorrigbility in CIRL
 date: 2019-04-24 05:00:00 +1000
 ---
 
-# Incorribility in CIRL
-
 There are my notes from reading the paper *Incorrigibility in CIRL*, and from the subsequent discussion.
 
 > [Link to paper](https://arxiv.org/pdf/1709.06275.pdf)
