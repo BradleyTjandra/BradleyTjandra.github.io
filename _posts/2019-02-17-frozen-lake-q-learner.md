@@ -1,6 +1,6 @@
 ---
 layout: post
-title: \[Code\] Q-Learner on OpenAI's Frozen Lake
+title: \[CODE\] Q-Learner on OpenAI's Frozen Lake
 date: 2019-02-17 05:00:00 +1000
 ---
 
