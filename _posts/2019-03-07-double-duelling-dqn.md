@@ -11,5 +11,5 @@ I have created a Q-learner which implements a [double DQN](https://arxiv.org/abs
 
 **Environment:**
 [https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/GridWorldEnv.py](https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/GridWorldEnv.py)
-*The environment is from [awjuliani](https://github.com/awjuliani/DeepRL-Agents/blob/master/gridworld.py)&
+*The environment is from [awjuliani](https://github.com/awjuliani/DeepRL-Agents/blob/master/gridworld.py)*
 
