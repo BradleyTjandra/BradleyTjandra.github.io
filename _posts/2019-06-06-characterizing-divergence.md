@@ -80,7 +80,7 @@ Here:
 * $\alpha$ is the learning rate
 * $K_\theta$ is a matrix where the $(i, j)$th element is $\nabla_\theta Q_i \nabla_\theta Q_j$. This is also called the _neural tangent kernal_, to be discussed later.
 * $D_\rho$ is a diagonal matrix is the _off-policy data distribution_, where the $(i_{s,a},i_{s,a})$th element $\rho(s,a)$ is the proportion of the experience buffer which relates to taking action $a$ in state $s$. 
-* $\mathcal T^*Q_\theta (s,a)= R(s,a,s') + \gamma \max_{a'} Q(s',a')$, where both $R(s,a,s')$ and $s'$ are known from the actual experience. $\mathcal T^*Q_\theta$ is the _sample estimate_ of $Q_\theta$. (Note that if the environment is stochastic, it is possible that the same $(s,a)$ could lead to different $s'$, and so $\mathcal T^*Q_\theta$ can be seen as an average of the sample estimates.
+* $\mathcal T^*Q_\theta (s,a)= R(s,a,s') + \gamma \max_{a'} Q(s',a')$ , where both $R(s,a,s')$ and $s'$ are known from the actual experience. $\mathcal T^*Q_\theta$ is the _sample estimate_ of $Q_\theta$. (Note that if the environment is stochastic, it is possible that the same $(s,a)$ could lead to different $s'$, and so $\mathcal T^*Q_\theta$ can be seen as an average of the sample estimates.
 * $g = \Vert \theta' - \theta \Vert$, which can be regarded as the _non-linear_ part of the approximation
 
 In short, this doesn't converge (i.e. diverges) when any of $K_\theta, D_\rho, \mathcal T^* Q_\theta, g$ are too large. But first let's derive this equation.
