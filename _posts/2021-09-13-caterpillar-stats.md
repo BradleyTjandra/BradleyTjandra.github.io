@@ -8,4 +8,4 @@ I have created done some analysis on different methods to create D&D stat genera
 
 The method, and more details of the analysis behind this, is available here:
 
-[Caterpillar Stat Generation](https://bradleytjandra.github.io/pages/caterpillar-stat-generation/html/intro.html)
+[Caterpillar Stat Generation](https://bradleytjandra.github.io/caterpillar-stat-generation/intro.html)
