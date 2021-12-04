@@ -1,0 +1,7 @@
+I"d<p>I have created some Q-learners to attempt some multi-armed bandit problems.</p>
+
+<ul>
+  <li><a href="https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/TwoArmedBandits.py">Two Armed Bandits</a></li>
+  <li><a href="https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/ContextualBandit.py">Contextual Bandit</a></li>
+</ul>
+:ET

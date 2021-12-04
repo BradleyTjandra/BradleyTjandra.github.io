@@ -1,0 +1,4 @@
+I"�<p>I have created a model-based Q-learner to attempt OpenAI’s Gym’s Cart Pole environment. It trains a model to predict how the Cart Pole environment behaves, and trains the agent’s policy using its model of the Cart Pole environment.</p>
+
+<p><a href="https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/PoleCart_ModelBased.py">https://github.com/BradleyTjandra/ReinforcementLearning/blob/master/PoleCart_ModelBased.py</a></p>
+:ET

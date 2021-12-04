@@ -1,0 +1,6 @@
+I"�<p>I have created done some analysis on different methods to create D&amp;D stat generation. The key insight is to use a “caterpillar method” to create the stats, which allows you to create character stat arrays with some randomness, but with a much lower chance of creating unbalanced characters.</p>
+
+<p>The method, and more details of the analysis behind this, is available here:</p>
+
+<p><a href="/caterpillar-stat-generation/intro.html">Caterpillar Stat Generation</a></p>
+:ET

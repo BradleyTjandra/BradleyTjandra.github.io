@@ -1,0 +1,9 @@
+I"%<p>I have created a basic GAN which implements <a href="https://arxiv.org/pdf/1406.2661.pdf">Goodfellow et al.’s GAN</a>. It can be seen <a href="https://github.com/BradleyTjandra/Deep-Learning/blob/master/GAN.py">here</a>. It is also now coded in <a href="https://colab.research.google.com/drive/1MUytteadV6otGsTcWhI4VAbnoRByHGFY">TF2</a> on Google Colab</p>
+
+<p>Two interesting things I found in creating this:</p>
+
+<ul>
+  <li>The architecture I have created is simpler than Goodfellow’s, and still works. It doesn’t use the MaxOut layer at all.</li>
+  <li>It took me a while to realise I needed to state explicitly which weights to maximise - when we are maximising the adversarial loss we only want to train the adversarial network part of the graph, and similarly for the generator.</li>
+</ul>
+:ET
