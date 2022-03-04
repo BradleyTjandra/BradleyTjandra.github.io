@@ -1,4 +1,4 @@
-body {
+div.content {
   margin: 60px auto;
   width: 70%;
 }
@@ -41,6 +41,11 @@ ul.posts {
 ul.posts li {
   list-style: none;
 }
-.blurb {
+
+.container {
   font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+
+#header {
+  height: 1em;
 }
