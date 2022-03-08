@@ -47,5 +47,6 @@ ul.posts li {
 }
 
 #header {
-  height: 1em;
+  max-height: 64px;
+  overflow-y: hidden;
 }
