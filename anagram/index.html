@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptic Crossword Helper</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: #f0f2f5;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 1.5rem 1rem;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 2rem 1.5rem;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    header { margin-bottom: 1.75rem; }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Input section ── */
+    .input-section { margin-bottom: 1.5rem; }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-row { display: flex; gap: 0.5rem; }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.65rem 0.9rem;
+      border: 2px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1e1b4b;
+      background: #fafafa;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    .input-hint {
+      font-size: 0.73rem;
+      color: #9ca3af;
+      margin-top: 0.35rem;
+    }
+
+    .btn {
+      padding: 0.65rem 1.1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn:active { transform: scale(0.96); }
+
+    .btn-secondary { background: #f3f4f6; color: #374151; }
+    .btn-secondary:hover { background: #e5e7eb; }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── Letter grid ── */
+    .grid-section { margin-bottom: 1.25rem; }
+
+    .letter-grid {
+      display: grid;
+      grid-template-columns: repeat(var(--cols, 3), 1fr);
+      gap: 0.45rem;
+    }
+
+    .tile {
+      aspect-ratio: 1;
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, color 0.15s;
+      user-select: none;
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    .tile:hover:not(.used) { background: #4f46e5; transform: scale(1.07); }
+    .tile:active:not(.used) { transform: scale(0.96); }
+
+    .tile.used {
+      background: #e5e7eb;
+      color: #c4c9d1;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ── Answer section ── */
+    .answer-section {
+      border-top: 2px solid #f3f4f6;
+      padding-top: 1.25rem;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      padding: 0.45rem 0.9rem;
+      border: 2px solid transparent;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      font-family: inherit;
+      white-space: nowrap;
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .btn-action:hover { background: #e5e7eb; }
+    .btn-action:active { transform: scale(0.96); }
+
+    /* ── Answer slots area — focusable for keyboard input ── */
+    .answer-slots-area {
+      outline: none; /* we show focus via slot highlighting */
+    }
+
+    .answer-slots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+      align-items: center;
+    }
+
+    /* Base slot */
+    .slot {
+      width: 2.6rem;
+      height: 2.8rem;
+      border: 2px solid #d1d5db;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
+      font-family: inherit;
+      user-select: none;
+      background: #fff;
+      position: relative;
+    }
+
+    /* Empty */
+    .slot.empty { background: #fafafa; }
+    .slot.empty::after {
+      content: '';
+      display: block;
+      width: 1rem;
+      height: 2px;
+      background: #d1d5db;
+      border-radius: 1px;
+    }
+
+    /* Filled from tile (indigo) */
+    .slot.filled-tile {
+      background: #eef2ff;
+      border-color: #6366f1;
+      color: #4f46e5;
+    }
+    .slot.filled-tile:hover { background: #e0e7ff; border-color: #4f46e5; }
+
+    /* Filled by typing (green) */
+    .slot.filled-typed {
+      background: #f0fdf4;
+      border-color: #4ade80;
+      color: #16a34a;
+    }
+    .slot.filled-typed:hover { background: #dcfce7; border-color: #22c55e; }
+
+    /* Unknown (?) amber */
+    .slot.unknown {
+      background: #fefce8;
+      border-color: #fbbf24;
+      color: #d97706;
+    }
+    .slot.unknown:hover { background: #fef9c3; border-color: #d97706; }
+
+    /* Selected slot — glowing ring */
+    .slot.selected {
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+      transform: scale(1.1);
+      z-index: 1;
+    }
+    .slot.selected::after { background: #6366f1; }
+
+    /* Virtual "end" cursor — shown when selectedSlot === slots.length */
+    .slot-end-cursor {
+      width: 0.2rem;
+      height: 2.8rem;
+      background: #6366f1;
+      border-radius: 2px;
+      animation: blink 1s step-start infinite;
+      align-self: center;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Word-split marker */
+    .slot-split {
+      min-width: 1.4rem;
+      height: 2.8rem;
+      padding: 0 0.3rem;
+      border: 2px dashed #c7d2fe;
+      border-radius: 0.4rem;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #a5b4fc;
+      cursor: pointer;
+      font-family: inherit;
+      user-select: none;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+
+    .slot-split:hover { background: #f5f3ff; border-color: #818cf8; color: #6366f1; }
+
+    .slot-split.selected {
+      border-color: #6366f1 !important;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+      transform: scale(1.1);
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: #b0b7c3;
+      font-style: italic;
+    }
+
+    @media (max-width: 380px) {
+      .tile { font-size: 1.1rem; }
+      .slot { width: 2.2rem; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Anagram Helper</h1>
+      <p class="subtitle">Cryptic Crossword Edition</p>
+    </header>
+
+    <section class="input-section">
+      <label for="letter-input">Enter your letters</label>
+      <div class="input-row">
+        <input
+          type="text"
+          id="letter-input"
+          placeholder="e.g. AT ONE"
+          maxlength="40"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        >
+        <button id="clear-btn" class="btn btn-secondary">Clear</button>
+      </div>
+      <p class="input-hint">Use spaces to indicate word breaks in the answer</p>
+    </section>
+
+    <section class="grid-section" id="grid-section" hidden>
+      <p class="section-label">Letters</p>
+      <div class="letter-grid" id="letter-grid"></div>
+    </section>
+
+    <section class="answer-section" id="answer-section" hidden>
+      <p class="section-label">Answer</p>
+
+      <div class="action-row">
+        <button id="btn-unknown" class="btn-action">? Unknown</button>
+        <button id="btn-split" class="btn-action">| Word split</button>
+      </div>
+
+      <!-- tabindex makes this div keyboard-focusable so we can capture typing -->
+      <div class="answer-slots-area" id="answer-slots-area" tabindex="0">
+        <div class="answer-slots" id="answer-slots"></div>
+      </div>
+      <p class="hint">Click a slot to select it · Type to fill · Backspace to clear · ← → to move</p>
+    </section>
+  </div>
+
+  <script>
+    // ── State ──────────────────────────────────────────────────────────────
+    // slot types:
+    //   { type:'letter', value:null, tileIndex:null, typed:false, el }  — empty
+    //   { type:'letter', value:'A',  tileIndex:3,    typed:false, el }  — filled from tile
+    //   { type:'letter', value:'A',  tileIndex:null, typed:true,  el }  — filled by keyboard
+    //   { type:'unknown', el }
+    //   { type:'split', el }
+    //
+    // selectedSlot: number 0..slots.length
+    //   0..slots.length-1 = a slot index
+    //   slots.length      = the virtual "end" cursor (append mode)
+    //   null              = nothing selected
+
+    let state = {
+      tiles: [],
+      slots: [],
+      selectedSlot: null
+    };
+
+    // ── DOM refs ───────────────────────────────────────────────────────────
+    const letterInput    = document.getElementById('letter-input');
+    const clearBtn       = document.getElementById('clear-btn');
+    const gridSection    = document.getElementById('grid-section');
+    const letterGrid     = document.getElementById('letter-grid');
+    const answerSection  = document.getElementById('answer-section');
+    const answerSlotsEl  = document.getElementById('answer-slots');
+    const answerArea     = document.getElementById('answer-slots-area');
+    const btnUnknown     = document.getElementById('btn-unknown');
+    const btnSplit       = document.getElementById('btn-split');
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function parseInput(raw) {
+      return raw.toUpperCase()
+        .replace(/[^A-Z ]/g, '')
+        .replace(/ {2,}/g, ' ')
+        .slice(0, 40)
+        .split('');
+    }
+
+    function computeCols(n) {
+      if (n === 0) return 0;
+      return Math.ceil(Math.sqrt(n));
+    }
+
+    function columnFirst(letters, cols) {
+      if (cols === 0) return [];
+      const rows = Math.ceil(letters.length / cols);
+      const result = [];
+      for (let col = 0; col < cols; col++) {
+        for (let row = 0; row < rows; row++) {
+          const i = row * cols + col;
+          if (i < letters.length) result.push({ letter: letters[i], srcIndex: i });
+        }
+      }
+      return result;
+    }
+
+    function makeTiledSlot()   { return { type: 'letter', value: null, tileIndex: null, typed: false, el: null }; }
+    function makeSplitSlot()   { return { type: 'split',   el: null }; }
+    function makeUnknownSlot() { return { type: 'unknown', el: null }; }
+
+    // ── Build tile grid ────────────────────────────────────────────────────
+    function buildGrid(letters) {
+      const nonSpace = letters.filter(l => l !== ' ');
+      const cols = computeCols(nonSpace.length);
+      letterGrid.style.setProperty('--cols', cols);
+      letterGrid.innerHTML = '';
+      state.tiles = nonSpace.map((letter, index) => ({ letter, index, used: false, el: null }));
+      columnFirst(nonSpace, cols).forEach(({ letter, srcIndex }) => {
+        const btn = document.createElement('button');
+        btn.className = 'tile';
+        btn.textContent = letter;
+        btn.dataset.index = srcIndex;
+        btn.addEventListener('click', onTileClick);
+        letterGrid.appendChild(btn);
+        state.tiles[srcIndex].el = btn;
+      });
+    }
+
+    // ── Build answer slots ─────────────────────────────────────────────────
+    function buildSlots(letters) {
+      state.slots = letters.map(l => l === ' ' ? makeSplitSlot() : makeTiledSlot());
+      state.selectedSlot = null;
+      renderSlots();
+      selectFirstEmpty();
+    }
+
+    // ── Render ─────────────────────────────────────────────────────────────
+    function renderSlots() {
+      answerSlotsEl.innerHTML = '';
+      const atEnd = state.selectedSlot === state.slots.length; // virtual end cursor
+
+      state.slots.forEach((slot, i) => {
+        let el;
+
+        if (slot.type === 'split') {
+          el = document.createElement('button');
+          el.className = 'slot-split';
+          el.textContent = '|';
+          el.title = 'Click to remove';
+          if (state.selectedSlot === i) el.classList.add('selected');
+
+        } else {
+          el = document.createElement('button');
+          el.className = 'slot';
+
+          if (slot.type === 'unknown') {
+            el.classList.add('unknown');
+            el.textContent = '?';
+          } else if (slot.value !== null) {
+            el.classList.add(slot.typed ? 'filled-typed' : 'filled-tile');
+            el.textContent = slot.value;
+          } else {
+            el.classList.add('empty');
+          }
+
+          if (state.selectedSlot === i) el.classList.add('selected');
+        }
+
+        el.dataset.slotIndex = i;
+        el.addEventListener('click', onSlotClick);
+        answerSlotsEl.appendChild(el);
+        slot.el = el;
+      });
+
+      // Blinking cursor at end
+      if (atEnd) {
+        const cursor = document.createElement('div');
+        cursor.className = 'slot-end-cursor';
+        answerSlotsEl.appendChild(cursor);
+      }
+    }
+
+    // ── Selection helpers ──────────────────────────────────────────────────
+    function selectSlot(i) {
+      state.selectedSlot = i;
+      renderSlots();
+    }
+
+    function selectFirstEmpty() {
+      const i = state.slots.findIndex(s => s.type === 'letter' && s.value === null);
+      // If no empty slot, land on end
+      state.selectedSlot = i >= 0 ? i : state.slots.length;
+      renderSlots();
+    }
+
+    // After filling a slot: advance to next empty, or end
+    function advanceSelection() {
+      const start = state.selectedSlot ?? -1;
+      for (let i = start + 1; i < state.slots.length; i++) {
+        if (state.slots[i].type === 'letter' && state.slots[i].value === null) {
+          selectSlot(i);
+          return;
+        }
+      }
+      // Land on end cursor
+      selectSlot(state.slots.length);
+    }
+
+    // ── Clear a slot's content (returns tile to grid) ──────────────────────
+    function clearSlot(i) {
+      const slot = state.slots[i];
+      if (!slot || slot.type === 'split') return;
+      if (slot.tileIndex !== null) {
+        state.tiles[slot.tileIndex].used = false;
+        state.tiles[slot.tileIndex].el.classList.remove('used');
+      }
+      slot.type  = 'letter';
+      slot.value = null;
+      slot.tileIndex = null;
+      slot.typed = false;
+    }
+
+    // ── Slot click ─────────────────────────────────────────────────────────
+    function onSlotClick(e) {
+      const i = parseInt(e.currentTarget.dataset.slotIndex, 10);
+      const slot = state.slots[i];
+
+      if (slot.type === 'split') {
+        // Remove the split
+        state.slots.splice(i, 1);
+        if (state.selectedSlot !== null) {
+          if (state.selectedSlot > i) state.selectedSlot--;
+          else if (state.selectedSlot === i) state.selectedSlot = null;
+        }
+        renderSlots();
+        answerArea.focus();
+        return;
+      }
+
+      // Clicking the already-selected slot clears it (keep selected)
+      if (state.selectedSlot === i) {
+        clearSlot(i);
+        renderSlots();
+        answerArea.focus();
+        return;
+      }
+
+      // Clicking a filled/unknown slot: clear it, then select it
+      if (slot.type === 'unknown' || slot.value !== null) {
+        clearSlot(i);
+      }
+
+      selectSlot(i);
+      answerArea.focus();
+    }
+
+    // ── Fill the selected slot with a letter ───────────────────────────────
+    // typed=true means keyboard-typed; typed=false means from a tile (tileIndex provided)
+    function fillSelectedSlot(letter, tileIndex, typed) {
+      const si = state.selectedSlot;
+
+      // At the end cursor — append a new typed slot
+      if (si === state.slots.length) {
+        const newSlot = makeTiledSlot();
+        newSlot.value     = letter;
+        newSlot.tileIndex = tileIndex;
+        newSlot.typed     = typed;
+        state.slots.push(newSlot);
+        // Advance to end again (new end)
+        state.selectedSlot = state.slots.length;
+        renderSlots();
+        return;
+      }
+
+      if (si === null) return;
+      const slot = state.slots[si];
+      if (!slot || slot.type === 'split') return;
+
+      // If slot already had a tile, return it first
+      clearSlot(si);
+
+      slot.value     = letter;
+      slot.tileIndex = tileIndex;
+      slot.typed     = typed;
+      if (slot.type !== 'letter') slot.type = 'letter'; // convert from unknown
+
+      advanceSelection();
+    }
+
+    // ── Tile click ─────────────────────────────────────────────────────────
+    function onTileClick(e) {
+      const tileIndex = parseInt(e.currentTarget.dataset.index, 10);
+      const tile = state.tiles[tileIndex];
+      if (tile.used) return;
+
+      // If nothing useful selected, auto-pick first empty slot (or end)
+      if (state.selectedSlot === null) {
+        const firstEmpty = state.slots.findIndex(s => s.type === 'letter' && s.value === null);
+        state.selectedSlot = firstEmpty >= 0 ? firstEmpty : state.slots.length;
+      }
+
+      // Mark tile used before filling (fillSelectedSlot checks slot type)
+      tile.used = true;
+      tile.el.classList.add('used');
+
+      fillSelectedSlot(tile.letter, tileIndex, false);
+    }
+
+    // ── Keyboard handling ──────────────────────────────────────────────────
+    answerArea.addEventListener('keydown', e => {
+      // Don't steal modifier combos
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      const key = e.key;
+
+      // Letter key → fill slot
+      if (/^[a-zA-Z]$/.test(key)) {
+        e.preventDefault();
+        const letter = key.toUpperCase();
+        if (state.selectedSlot === null) state.selectedSlot = state.slots.length;
+        fillSelectedSlot(letter, null, true);
+        return;
+      }
+
+      // Space → insert a word split after current position, then advance
+      if (key === ' ') {
+        e.preventDefault();
+        const insertAt = state.selectedSlot !== null ? state.selectedSlot : state.slots.length;
+        // Insert split at current position (pushes current slot right)
+        state.slots.splice(insertAt, 0, makeSplitSlot());
+        // selectedSlot now points to the new split; advance past it
+        state.selectedSlot = insertAt + 1;
+        // If we've gone past the end, cap at end
+        if (state.selectedSlot > state.slots.length) state.selectedSlot = state.slots.length;
+        renderSlots();
+        return;
+      }
+
+      // Backspace → clear current slot, or if already empty remove it if it was appended
+      if (key === 'Backspace') {
+        e.preventDefault();
+        const si = state.selectedSlot;
+
+        // At end cursor with nothing to clear: step back and clear that slot
+        if (si === state.slots.length && si > 0) {
+          state.selectedSlot = si - 1;
+          handleBackspaceAt(state.selectedSlot);
+          return;
+        }
+
+        if (si !== null && si < state.slots.length) {
+          handleBackspaceAt(si);
+        }
+        return;
+      }
+
+      // Arrow left
+      if (key === 'ArrowLeft') {
+        e.preventDefault();
+        const si = state.selectedSlot ?? state.slots.length;
+        if (si > 0) selectSlot(si - 1);
+        return;
+      }
+
+      // Arrow right
+      if (key === 'ArrowRight') {
+        e.preventDefault();
+        const si = state.selectedSlot ?? -1;
+        if (si < state.slots.length) selectSlot(si + 1);
+        return;
+      }
+    });
+
+    function handleBackspaceAt(i) {
+      const slot = state.slots[i];
+      if (!slot) return;
+
+      if (slot.type === 'split') {
+        // Remove the split slot
+        state.slots.splice(i, 1);
+        state.selectedSlot = Math.min(i, state.slots.length);
+        renderSlots();
+        return;
+      }
+
+      if (slot.type === 'unknown' || slot.value !== null) {
+        // Slot has content: clear it
+        clearSlot(i);
+        // If it was a typed-and-appended slot (past original length), remove it
+        // We detect "appended" by checking if it's beyond the original input length.
+        // Simpler: we always keep the slot (just empty it). User can re-fill.
+        renderSlots();
+      }
+      // else: already empty, nothing to do
+    }
+
+    // ── Action buttons ─────────────────────────────────────────────────────
+    btnUnknown.addEventListener('click', () => {
+      const si = state.selectedSlot;
+      if (si === null) return;
+
+      if (si === state.slots.length) {
+        // Append an unknown slot at end
+        state.slots.push(makeUnknownSlot());
+        state.selectedSlot = state.slots.length;
+        renderSlots();
+        answerArea.focus();
+        return;
+      }
+
+      const slot = state.slots[si];
+      if (slot.type === 'split') return;
+      clearSlot(si);
+      slot.type = 'unknown';
+      advanceSelection();
+      answerArea.focus();
+    });
+
+    btnSplit.addEventListener('click', () => {
+      const insertAt = state.selectedSlot !== null ? state.selectedSlot : state.slots.length;
+      state.slots.splice(insertAt, 0, makeSplitSlot());
+      state.selectedSlot = insertAt + 1;
+      if (state.selectedSlot > state.slots.length) state.selectedSlot = state.slots.length;
+      renderSlots();
+      answerArea.focus();
+    });
+
+    // ── Input handler ──────────────────────────────────────────────────────
+    letterInput.addEventListener('input', function () {
+      const letters = parseInput(this.value);
+
+      state.tiles.forEach(t => { if (t.el) t.el.classList.remove('used'); });
+
+      if (letters.length === 0) {
+        gridSection.hidden = true;
+        answerSection.hidden = true;
+        state.tiles = [];
+        state.slots = [];
+        return;
+      }
+
+      buildGrid(letters);
+      buildSlots(letters);
+      gridSection.hidden = false;
+      answerSection.hidden = false;
+    });
+
+    // ── Clear button ───────────────────────────────────────────────────────
+    clearBtn.addEventListener('click', () => {
+      letterInput.value = '';
+      state.tiles = [];
+      state.slots = [];
+      state.selectedSlot = null;
+      letterGrid.innerHTML = '';
+      answerSlotsEl.innerHTML = '';
+      gridSection.hidden = true;
+      answerSection.hidden = true;
+      letterInput.focus();
+    });
+
+    letterInput.focus();
+  </script>
+</body>
+</html>
