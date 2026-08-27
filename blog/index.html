@@ -3,7 +3,7 @@ layout: default
 title: Blog
 ---
 <h1>Blog</h1>
-<p>Notes, essays, and link roundups. Older posts marked <span class="archived">archive</span>
+<p>Notes, essays, and link roundups. Posts marked <span class="archived">archive</span>
 were carried over from my old blog, <em>Well Clockworked</em>.</p>
 
 {% if site.posts.size > 0 %}
@@ -16,11 +16,17 @@ were carried over from my old blog, <em>Well Clockworked</em>.</p>
       <li class="year">{{ post_year }}</li>
     {% endif %}
     <li class="entry">
-      <span class="date">{{ post.date | date: "%d %b" }}</span>
-      <span class="title">
-        <a href="{{ post.url }}">{{ post.title }}</a>
+      <a class="title" href="{{ post.url }}">{{ post.title }}</a>
+      <div class="meta">
+        <span class="date">{{ post.date | date: "%-d %b" }}</span>
+        {% if post.description %}
+          <span class="summary">{{ post.description }}</span>
+        {% else %}
+          {% assign summary = post.excerpt | strip_html | normalize_whitespace | truncate: 150 %}
+          {% if summary != "" %}<span class="summary">{{ summary }}</span>{% endif %}
+        {% endif %}
         {% if post.old_blog %}<span class="archived">archive</span>{% endif %}
-      </span>
+      </div>
     </li>
   {% endfor %}
 </ul>

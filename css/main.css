@@ -165,28 +165,43 @@ footer ul li { margin: 0; }
 footer ul li a { color: var(--muted); }
 
 /* ---------- blog listing ---------- */
-.post-list { list-style: none; margin: 1.5rem 0 0; padding: 0; }
+.post-list { list-style: none; margin: 2rem 0 0; padding: 0; }
 .post-list .year {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--muted);
-  margin: 2rem 0 0.6rem;
+  margin: 2.4rem 0 1rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
 }
-.post-list li.entry {
-  margin: 0.5rem 0;
-  display: flex;
-  gap: 0.9rem;
-  align-items: baseline;
+.post-list .year:first-child { margin-top: 0.5rem; }
+.post-list li.entry { margin: 1.1rem 0; }
+.post-list .entry .title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
-.post-list .date {
-  flex: none;
-  width: 3.4rem;
-  font-size: 0.8rem;
+.post-list .entry .meta {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
 }
-.post-list .archived { font-size: 0.72rem; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 0 0.45rem; }
+.post-list .entry .date::after { content: " · "; }
+.post-list .entry .summary { }
+.post-list .archived {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  vertical-align: 0.05em;
+}
 
 /* ---------- post ---------- */
 .post-meta {
