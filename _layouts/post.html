@@ -3,7 +3,18 @@ layout: default
 ---
 <article class="post">
   <h1>{{ page.title }}</h1>
-  <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+  <p class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+    {% if page.tags.size > 0 %}<span class="post-tags">{{ page.tags | join: " · " }}</span>{% endif %}
+  </p>
+
+  {% if page.old_blog %}
+  <aside class="old-blog-note">
+    Originally posted on my old blog, <em>Well Clockworked</em>
+    ({{ page.date | date: "%Y" }}){% if page.original_url %} &middot;
+    <a href="{{ page.original_url }}">view original</a>{% endif %}.
+  </aside>
+  {% endif %}
 
   {{ content }}
 

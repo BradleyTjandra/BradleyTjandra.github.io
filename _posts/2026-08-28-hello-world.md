@@ -1,9 +1,10 @@
 ---
-title: "Hello, world"
+title: "Reviving the blog"
 date: 2026-08-28
 ---
 
-This is the first post on my new blog. I set it up with Jekyll, so new posts
-are just Markdown files dropped into `_posts/`.
+I've pulled the posts over from my old WordPress blog, *Well Clockworked*, and
+folded them into this site. Anything dated 2016–2022 is from that archive — link
+roundups, half-formed essays, and a few things I still stand by.
 
-More to come.
+New writing will show up here from time to time.
