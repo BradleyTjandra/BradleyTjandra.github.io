@@ -1,0 +1,31 @@
+title: Bradley Tjandra
+email: bjtjandra@gmail.com
+description: >-
+  Personal site and blog of Bradley Tjandra.
+author: Bradley Tjandra
+url: "https://bradleytjandra.com"
+baseurl: ""
+
+permalink: /blog/:title/
+
+# Posts live in _posts/ and render through _layouts/post.html.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+# Keep Jekyll from touching things it shouldn't.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor/
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+feed:
+  path: blog/feed.xml
