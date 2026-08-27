@@ -7,6 +7,8 @@ url: "https://bradleytjandra.com"
 baseurl: ""
 
 permalink: /blog/:title/
+timezone: Australia/Sydney
+future: true
 
 # Posts live in _posts/ and render through _layouts/post.html.
 defaults:
