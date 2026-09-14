@@ -1,7 +1,7 @@
 ---
 title: "Types of Conversations"
 date: 2026-09-14
-description: "In which I try to describe a distinction in conversations types"
+description: "I try to describe the kind of conversations I like"
 ---
 
 People often ask me what I'm looking for when I say I want more "interesting" conversations. What is "interesting" for me?
@@ -52,6 +52,8 @@ Here are some conversation topics I enjoy, which I feel demonstrate my NF intere
 * Analysing what has happened with the relationships of those around us, and how the way they act makes sense based on what we know about their upbringing.
 * Speculation about the wider world and how people feel. How will people find meaning in a post-work world? How are people finding community in the digital world? How healthy is people's relationship to religion?
 * How are we growing, developing, improving ourselves? Sharing what's challenging us or interfering with our flourishing, as well as what approaches have been useful in solving those things.
+
+I think a common feature is about trying to understanding "the human condition".
 
 If you can suggest places or people in Melbourne to meet people, let me know!
 
