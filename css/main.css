@@ -138,7 +138,7 @@ th, td { border: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: le
 }
 .site-name {
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   color: var(--fg);
 }
 .site-name:hover { text-decoration: none; color: var(--link); }
@@ -151,7 +151,7 @@ nav ul {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
 }
 nav ul li { margin: 0; }
 nav ul li a { color: var(--muted); font-weight: 500; }
@@ -162,7 +162,7 @@ footer {
   margin-top: 3.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--border);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 footer ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 1rem; }
 footer ul li { margin: 0; }
