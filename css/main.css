@@ -8,7 +8,7 @@
   --link-hover: #2f2fae;
   --accent-bg: #f7f7fb;
   --code-bg: #f3f4f6;
-  --measure: 40rem;
+  --measure: 48rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -44,6 +44,10 @@ div.content {
   margin: 0 auto;
   padding: 3rem 1.25rem 4rem;
   width: auto;
+}
+
+.container {
+  font-family: "Spectral", Georgia, "Times New Roman", serif;
 }
 
 /* ---------- headings & text ---------- */
