@@ -232,3 +232,19 @@ footer ul li a { color: var(--muted); }
   border-top: 1px solid var(--border);
   font-size: 0.9rem;
 }
+
+/* ---------- home ---------- */
+.hero-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 3.5rem 0 3rem;
+}
+
+.hero-img {
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  margin: 0;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
