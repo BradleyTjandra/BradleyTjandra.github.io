@@ -1,6 +1,6 @@
 ---
 title: "Doctor Zhivago"
-date: 2026-08-28
+date: 2026-08-29
 description: "Notes for my book club on Doctor Zhivago"
 ---
 _Spoilers inside!_
