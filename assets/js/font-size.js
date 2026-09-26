@@ -16,8 +16,6 @@
   function render(value) {
     var label = Math.round(value * 100) + '%';
     readout.textContent = label;
-    dec.title = 'Decrease text size (' + label + ')';
-    inc.title = 'Increase text size (' + label + ')';
   }
 
   function apply(value) {
