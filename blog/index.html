@@ -6,9 +6,6 @@ title: Blog
 <p>Notes, essays, and link roundups. Posts marked <span class="archived">archive</span>
 were carried over from my old blog, <em>Well Clockworked</em>.</p>
 
-{% include font-size-control.html %}
-
-<div class="blog-scale">
 {% if site.posts.size > 0 %}
 <ul class="post-list">
   {% assign current_year = "" %}
@@ -36,4 +33,3 @@ were carried over from my old blog, <em>Well Clockworked</em>.</p>
 {% else %}
 <p>No posts yet — check back soon.</p>
 {% endif %}
-</div>
