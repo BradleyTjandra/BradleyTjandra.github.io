@@ -9,6 +9,7 @@
   --accent-bg: #f7f7fb;
   --code-bg: #f3f4f6;
   --measure: 48rem;
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +22,7 @@
     --link-hover: #b9b9f6;
     --accent-bg: #1d2026;
     --code-bg: #22262d;
+    color-scheme: dark;
   }
 }
 
@@ -156,6 +158,91 @@ nav ul {
 nav ul li { margin: 0; }
 nav ul li a { color: var(--muted); font-weight: 500; }
 nav ul li a:hover { color: var(--fg); text-decoration: none; }
+
+/* ---------- font size control ---------- */
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0 0 1.75rem;
+}
+.font-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.font-btn:hover, .font-btn:focus-visible {
+  color: var(--fg);
+  background: var(--accent-bg);
+}
+.font-icon {
+  position: relative;
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+}
+.font-chevron {
+  position: absolute;
+  right: -0.7em;
+  width: 0.55em;
+  height: 0.4em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.font-decrease .font-chevron { bottom: -0.05em; }
+.font-increase .font-chevron { top: -0.05em; }
+.font-size-readout {
+  appearance: none;
+  background: none;
+  min-width: 2.8em;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+}
+.font-size-readout:hover, .font-size-readout:focus-visible {
+  color: var(--fg);
+  border-color: var(--muted);
+}
+
+/* ---------- scalable blog content ----------
+   Scoped to .blog-scale so the control only affects blog listing/post
+   copy, not the site header, nav, or other pages. */
+.blog-scale {
+  font-size: calc(1em * var(--font-scale, 1));
+}
+.blog-scale h1 { font-size: calc(1.9rem * var(--font-scale, 1)); }
+.blog-scale h2 { font-size: calc(1.35rem * var(--font-scale, 1)); }
+.blog-scale h3 { font-size: calc(1.1rem * var(--font-scale, 1)); }
+.blog-scale h4, .blog-scale h5, .blog-scale h6 { font-size: calc(1rem * var(--font-scale, 1)); }
+.blog-scale figcaption { font-size: calc(0.85rem * var(--font-scale, 1)); }
+.blog-scale blockquote cite { font-size: calc(0.85rem * var(--font-scale, 1)); }
+.blog-scale table { font-size: calc(0.95rem * var(--font-scale, 1)); }
+.blog-scale .old-blog-note { font-size: calc(0.88rem * var(--font-scale, 1)); }
+.blog-scale .post-list .year { font-size: calc(0.75rem * var(--font-scale, 1)); }
+.blog-scale .post-list .entry .title { font-size: calc(1.15rem * var(--font-scale, 1)); }
+.blog-scale .post-list .entry .meta { font-size: calc(0.9rem * var(--font-scale, 1)); }
+.blog-scale .post-list .archived { font-size: calc(0.68rem * var(--font-scale, 1)); }
 
 /* ---------- footer ---------- */
 footer {

@@ -8,15 +8,19 @@ layout: default
     {% if page.tags.size > 0 %}<span class="post-tags">{{ page.tags | join: " · " }}</span>{% endif %}
   </p>
 
-  {% if page.old_blog %}
-  <aside class="old-blog-note">
-    Originally posted on my old blog, <em>Well Clockworked</em>
-    ({{ page.date | date: "%Y" }}){% if page.original_url %} &middot;
-    <a href="{{ page.original_url }}">view original</a>{% endif %}.
-  </aside>
-  {% endif %}
+  {% include font-size-control.html %}
 
-  {{ content }}
+  <div class="blog-scale">
+    {% if page.old_blog %}
+    <aside class="old-blog-note">
+      Originally posted on my old blog, <em>Well Clockworked</em>
+      ({{ page.date | date: "%Y" }}){% if page.original_url %} &middot;
+      <a href="{{ page.original_url }}">view original</a>{% endif %}.
+    </aside>
+    {% endif %}
+
+    {{ content }}
+  </div>
 
   <p class="post-back"><a href="/blog">&larr; All posts</a></p>
 </article>
